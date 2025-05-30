@@ -14,16 +14,24 @@ contract Dappcord is ERC721 {
     }
 
     mapping (uint256 => Channel) public channels;
-
+    modifier onlyOwner() {
+         require(msg.sender == owner);
+         _;
+        
+    }
     constructor(string memory _name, string memory _symbol) 
-        ERC721(_name, _symbol) public 
+        ERC721(_name, _symbol)
     {
         owner = msg.sender;
     }
     
-    function createChannel(string memory _name, uint256 _cost) public {
+    function createChannel(string memory _name, uint256 _cost) public onlyOwner {
         // creates the channel
-        totalChannels = totalChannels + 1;
+        totalChannels++;
         channels[totalChannels] = Channel(totalChannels, _name, _cost);
+    }
+
+    function getChannel(uint256 _id) public view returns (Channel memory) {
+        return channels[_id];
     }
 }
