@@ -44,11 +44,17 @@ contract Dappcord is ERC721 {
 
         // NFT minting
         totalSupply ++;
-        _safeMint(msg.sender, 1);
+        _safeMint(msg.sender, totalSupply);
 
     }
 
     function getChannel(uint256 _id) public view returns (Channel memory) {
         return channels[_id];
+    }
+
+    function withdraw() public onlyOwner {
+        (bool success, )= owner.call{value: address(this).balance}("");
+        require(success);
+
     }
 }
