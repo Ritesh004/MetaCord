@@ -21,9 +21,9 @@ function App() {
   const [account, setAccount] = useState(null)
 
   const loadBlockchainData = async ()=> {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const account = ethers.utils.getAddress(account[0])
-    setAccount(account)
+    window.ethereum.on('accountsChanged', async ()=>{
+      window.location.reload()
+    })
 
   }
 
@@ -33,10 +33,10 @@ function App() {
 
   return (
     <div>
-      <Navigation/>
-      <h1>{account}</h1>
+      <Navigation account={account} setAccount ={setAccount}/>
+      
       <main>
-    // 1.26
+   
       </main>
     </div>
   );
