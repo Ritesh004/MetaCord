@@ -18,9 +18,29 @@ import config from './config.json';
 const socket = io('ws://localhost:3030');
 
 function App() {
+  const [provider, setProvider] = useState(null)
   const [account, setAccount] = useState(null)
+  const [dappcord, setDappcord] = useState(null)
+  const [channels, setChannels] = useState([])
 
   const loadBlockchainData = async ()=> {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    setProvider(provider)
+
+    const network = await provider.getNetwork()
+    const dappcord = new ethers.Contract(config[network.chainId].Dappcord.address, Dappcord, provider)
+    setDappcord(dappcord)
+
+   const totalChannels = await dappcord.totalChannels()
+   const channels=[]
+
+   for (var i=1; i<= totalChannels; i++){
+    const channel= await dappcord.getChannel(i)
+    channels.push(channel)
+   }
+   setChannels(channels)
+   
+
     window.ethereum.on('accountsChanged', async ()=>{
       window.location.reload()
     })
@@ -36,7 +56,16 @@ function App() {
       <Navigation account={account} setAccount ={setAccount}/>
       
       <main>
-   
+
+      <Servers/>
+      <Channels
+      provider={provider}
+      account={account}
+      dappcord={dappcord}
+      channels={channels} // 1.43 min
+      />
+      
+      <Messages/>
       </main>
     </div>
   );
