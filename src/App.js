@@ -23,6 +23,7 @@ function App() {
   const [account, setAccount] = useState(null)
   const [dappcord, setDappcord] = useState(null)
   const [channels, setChannels] = useState([])
+  const [currentChannel, setCurrentChannel] = useState(null)
 
   const loadBlockchainData = async ()=> {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -54,19 +55,21 @@ function App() {
 
   return (
     <div>
-      <Navigation account={account} setAccount ={setAccount}/>
+      <Navigation account={account} setAccount={setAccount}/>
       
       <main>
-
-      <Servers/>
-      <Channels
-      provider={provider}
-      account={account}
-      dappcord={dappcord}
-      channels={channels} 
-      />
-      
-      <Messages/>
+        <Servers/>
+        <Channels
+          provider={provider}
+          account={account}
+          dappcord={dappcord}
+          channels={channels}
+          currentChannel={currentChannel}
+          setCurrentChannel={setCurrentChannel}
+        />
+        <Messages
+          currentChannel={currentChannel}
+        />
       </main>
     </div>
   );
