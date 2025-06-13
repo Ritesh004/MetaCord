@@ -17,6 +17,7 @@ import config from './config.json';
 // Socket
 const socket = io('ws://localhost:3030');
 
+
 function App() {
   const [provider, setProvider] = useState(null)
   const [account, setAccount] = useState(null)
@@ -39,7 +40,7 @@ function App() {
     channels.push(channel)
    }
    setChannels(channels)
-   
+   console.log(channels)
 
     window.ethereum.on('accountsChanged', async ()=>{
       window.location.reload()
@@ -62,7 +63,7 @@ function App() {
       provider={provider}
       account={account}
       dappcord={dappcord}
-      channels={channels} // 1.43 min
+      channels={channels} 
       />
       
       <Messages/>
