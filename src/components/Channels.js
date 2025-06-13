@@ -38,7 +38,7 @@ const Channels = ({ provider, account, dappcord, channels, currentChannel, setCu
         <h2>Text Channels</h2>
 
         <ul>
-          {channels.map((channel, index) => (
+          {channels.map((channel, index) => (  
             <li 
               key={index}
               onClick={() => channelHandler(channel)}
@@ -47,7 +47,7 @@ const Channels = ({ provider, account, dappcord, channels, currentChannel, setCu
               {channel.name} - {ethers.utils.formatEther(channel.cost)} ETH
             </li>
           ))}
-        </ul>
+        </ul>     
 
       </div>
 
