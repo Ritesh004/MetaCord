@@ -13,11 +13,22 @@ const Messages =({account, messages, currentChannel}) => {
 const messagesEndRef = useRef(null);
 useEffect(() => {
     // Scroll to the bottom of the messages when they change
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scrollHandler = () => {
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    };
   }, [messages]);
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log("sending message...", message);
+    const messageObj= {
+      channel: currentChannel.id.toString(),
+      account: account,
+      text: message
+    }
+    if (message !== "") {
+      socket.emit('new message', messageObj);
+    }
   }
   return (
     <div className="text">
@@ -38,7 +49,14 @@ useEffect(() => {
       </div>
 
         <form onSubmit={sendMessage}>
-          <input type="text" onChange={(e)=> setMessage(e.target.value)}></input>
+          {currentChannel && account ? (
+          <input type="text" 
+          value={message}
+          placeholder={`message #${currentChannel.name}`}
+          onChange={(e)=> setMessage(e.target.value)}/>
+          ):(
+          <input type="text" value="" placeholder={`Please connect to MetaMask / Join the Channel`} disabled />
+          )}
           <button type="submit">
             <img src={send} alt="Send Message"/>
           </button>
