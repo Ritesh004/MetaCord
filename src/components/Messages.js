@@ -13,11 +13,12 @@ const Messages =({account, messages, currentChannel}) => {
 const messagesEndRef = useRef(null);
 useEffect(() => {
     // Scroll to the bottom of the messages when they change
-    const scrollHandler = () => {
+    
+       if (messagesEndRef.current) {
       setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 500);
-    };
+    }
   }, [messages]);
   const sendMessage = async (e) => {
     e.preventDefault();

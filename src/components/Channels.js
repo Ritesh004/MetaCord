@@ -64,4 +64,4 @@ const Channels = ({ provider, account, dappcord, channels, currentChannel, setCu
   );
 }
 
-export default Channels;
+export default Channels; 
