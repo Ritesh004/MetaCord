@@ -102,10 +102,6 @@ MetaCord/
 
 This project is licensed under the MIT License.
 
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for improvements or new features.
-
 ---
 
-**Note:** For full blockchain functionality, ensure your MetaMask is connected to the correct network and smart
+**Note:** For full blockchain functionality, ensure your MetaMask is connected to the correct network and start
